@@ -157,5 +157,12 @@ module IBANTools
 
     end
 
+    describe BIC do
+      it "should have BIC when Iban starts with FI" do
+        iban = IBAN.new "FI2112345600000785"
+        iban.bic.should == "NDEAFIHH"
+      end
+    end
+
   end
 end
