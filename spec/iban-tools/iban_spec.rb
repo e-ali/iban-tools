@@ -162,6 +162,16 @@ module IBANTools
         iban = IBAN.new "FI2112345600000785"
         iban.bic.should == "NDEAFIHH"
       end
+
+      it "should return nil when there is no BIC mapped" do
+        iban = IBAN.new "SI56191000000123438"
+        iban.bic.should be nil
+      end
+
+      it "should return nil when BIC is invalid" do
+        iban = IBAN.new "FI0112345600000785"
+        iban.bic.should be nil
+      end
     end
 
   end
