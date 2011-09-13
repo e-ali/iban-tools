@@ -1,7 +1,7 @@
 module IBANTools
   module BIC
     def bic
-      if country_bics_mapped? self.country_code
+      if country_bics_mapped?(self.country_code) and IBAN.valid?(self.code)
         bic_map = bic_maps[self.country_code]
         return find_bic bic_map, self.code
       else
