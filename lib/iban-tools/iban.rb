@@ -1,7 +1,10 @@
 # vim:ts=2:sw=2:et:
+require 'iban-tools/bic'
 
 module IBANTools
   class IBAN
+
+    include BIC
 
     def self.valid?( code, rules = nil )
       new(code).validation_errors(rules).empty?
