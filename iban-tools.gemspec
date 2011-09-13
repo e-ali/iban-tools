@@ -11,8 +11,9 @@ Gem::Specification.new do |s|
     "README.md",
     "lib/iban-tools.rb",
     "lib/iban-tools/iban.rb",
+    "lib/iban-tools/bic.rb",
     "lib/iban-tools/iban_rules.rb",
     "lib/iban-tools/rules.yml"
   ]
-  s.description  = "Validates IBAN account numbers"
+  s.description  = "Validates IBAN account numbers. Is able to get BIC from Finnish IBANs."
 end
