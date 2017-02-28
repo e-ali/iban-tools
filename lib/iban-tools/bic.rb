@@ -23,6 +23,7 @@ module IBANTools
         "4" =>  "HELSFIHH",
         "5" =>  "OKOYFIHH",
         "6" =>  "AABAFI22",
+        "79" => "HOLVFIHH",
         "8" =>  "DABAFIHH"
       }}
     end
