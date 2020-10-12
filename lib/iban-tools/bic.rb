@@ -10,22 +10,29 @@ module IBANTools
     end
 
     def bic_maps
-      {"FI" => {
-        "1" =>  "NDEAFIHH",
-        "2" =>  "NDEAFIHH",
-        "31" => "HANDFIHH",
-        "33" => "ESSEFIHX",
-        "34" => "DABAFIHX",
-        "36" => "TAPIFI22",
-        "37" => "DNBAFIHX",
-        "38" => "SWEDFIHH",
-        "39" => "SBANFIHH",
-        "4" =>  "HELSFIHH",
-        "5" =>  "OKOYFIHH",
-        "6" =>  "AABAFI22",
-        "79" => "HOLVFIHH",
-        "8" =>  "DABAFIHH"
-      }}
+      {'FI' =>
+           {
+               '405' => 'HELSFIHH', # Aktia
+               '497' => 'HELSFIHH', # Aktia
+               '717' => 'BIGKFIH1', # Bigbank
+               '47' => 'POPFFI22', # POP
+               '713' => 'CITIFIHX', # Citibank
+               '34' => 'DABAFIHX', # Danske Bank A/S, Suomen sivuliike
+               '8' => 'DABAFIHH', # Danske Bank A/S, Suomen sivuliike
+               '37' => 'DNBAFIHX', # DNB Bank ASA, Finland Branch
+               '31' => 'HANDFIHH', # Handelsbanken
+               '799' => 'HOLVFIHH', # Holvi
+               '1' => 'NDEAFIHH', # Nordea
+               '2' => 'NDEAFIHH', # Nordea
+               '5' => 'OKOYFIHH', # OP Ryhmä
+               '33' => 'ESSEFIHX', # SEB
+               '36' => 'SBANFIHH', # S-Pankki
+               '39' => 'SBANFIHH', # S-Pankki
+               '38' => 'SWEDFIHH', # Swedbank
+               '798' => 'VPAYFIH2', # Viva Payment Services S.A., Suomen sivuliike
+               '6' => 'AABAFI22' # Ålandsbanken
+           }
+      }
     end
 
     def country_bics_mapped? country_code
