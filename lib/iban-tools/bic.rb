@@ -1,57 +1,56 @@
 module IBANTools
   module BIC
-    def bic
-      if country_bics_mapped?(self.country_code) and IBAN.valid?(self.code)
-        bic_map = bic_maps[self.country_code]
-        return find_bic bic_map, self.code
-      else
-        return nil
-      end
-    end
 
-    def bic_maps
-      {'FI' =>
-           {
-               '405' => 'HELSFIHH', # Aktia
-               '497' => 'HELSFIHH', # Aktia
-               '717' => 'BIGKFIH1', # Bigbank
-               '47' => 'POPFFI22', # POP
-               '713' => 'CITIFIHX', # Citibank
-               '34' => 'DABAFIHX', # Danske Bank A/S, Suomen sivuliike
-               '8' => 'DABAFIHH', # Danske Bank A/S, Suomen sivuliike
-               '37' => 'DNBAFIHX', # DNB Bank ASA, Finland Branch
-               '31' => 'HANDFIHH', # Handelsbanken
-               '799' => 'HOLVFIHH', # Holvi
-               '1' => 'NDEAFIHH', # Nordea
-               '2' => 'NDEAFIHH', # Nordea
-               '5' => 'OKOYFIHH', # OP Ryhmä
-               '33' => 'ESSEFIHX', # SEB
-               '36' => 'SBANFIHH', # S-Pankki
-               '39' => 'SBANFIHH', # S-Pankki
-               '38' => 'SWEDFIHH', # Swedbank
-               '798' => 'VPAYFIH2', # Viva Payment Services S.A., Suomen sivuliike
-               '6' => 'AABAFI22' # Ålandsbanken
-           }
+    BIC_MAP = {
+      'FI' => {
+        :HELSFIHH => [405, 497], # Aktia
+        :BIGKFIH1 => [717], # Bigbank
+        :POPFFI22 => [(470..479).to_a].flatten, # POP
+        :CITIFIHX => [713], # Citibank
+        :DABAFIHH => [8, 34], # Danske Bank A/S, Suomen sivuliike
+        :DNBAFIHX => [37], # DNB Bank ASA, Finland Branch
+        :HANDFIHH => [31], # Handelsbanken
+        :HOLVFIHH => [799], # Holvi
+        :NDEAFIHH => [1, 2], # Nordea
+        :OKOYFIHH => [5], # OP Ryhmä
+        :ESSEFIHX => [33], # SEB
+        :SBANFIHH => [36, 39], # S-Pankki
+        :SWEDFIHH => [38], # Swedbank
+        :VPAYFIH2 => [798], # Viva Payment Services S.A., Suomen sivuliike
+        :AABAFI22 => [6], # Ålandsbanken
+        :ITELFIHH => [715, 400, 402, 403, (406..408).to_a,
+                      (410..412).to_a, (414..421).to_a,
+                      (423..432).to_a, (435..452).to_a,
+                      (454..464).to_a, (483..493).to_a,
+                      (495..496).to_a].flatten # Säästöpankkien Keskuspankki, Säästöpankit (Sp) ja Oma Säästöpankki
       }
-    end
+    }
 
-    def country_bics_mapped? country_code
-      bic_maps[country_code] != nil
+    def bic
+      if IBAN.valid?(self.code) && BIC_MAP[self.country_code].present?
+        find_bic(BIC_MAP[self.country_code], self.code)
+      else
+        nil
+      end
     end
 
     private
 
-    def find_bic bic_map, iban
-      (0..10).each do |i|
-        start_index = 4
+    def find_bic(bic_map, iban)
+      start_index = 4
+
+      (0..2).each do |i|
         s_key = iban[start_index..i+start_index]
         i_key = s_key.to_i
-        bic = bic_map[i_key.to_s]
-        if bic
-          return bic
+        bic_map.each do |key, values|
+          if values.include?(i_key)
+            return key.to_s
+          end
         end
       end
+
       raise "Bic mapping problem"
     end
+
   end
 end
